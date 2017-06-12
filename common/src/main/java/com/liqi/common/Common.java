@@ -1,4 +1,4 @@
-package com.liqi.common.widget.recycler;
+package com.liqi.common;
 
 /**
  * Created by liqi on 2017/6/11.
