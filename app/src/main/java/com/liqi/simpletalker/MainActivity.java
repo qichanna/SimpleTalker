@@ -10,10 +10,6 @@ import butterknife.BindView;
 
 public class MainActivity extends Activity {
 
-    @BindView(R.id.txt_result)
-    TextView mResult;
-
-
     @Override
     protected int getContentLayoutId() {
         return R.layout.activity_main;
@@ -22,6 +18,5 @@ public class MainActivity extends Activity {
     @Override
     protected void initData() {
         super.initData();
-        mResult.setText("hi ni hao");
     }
 }
