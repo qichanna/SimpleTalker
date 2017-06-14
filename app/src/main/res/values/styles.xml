@@ -14,7 +14,7 @@
     </style>
 
     <style name="AppTheme.TransStatusBar.Base" parent="AppTheme">
-        <!--去除顶部的状态栏-->
+        <!--去除顶部的状态栏,第一行使状态栏变透明-->
         <item name="android:windowTranslucentStatus">true</item>
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowAnimationStyle">@null</item>

@@ -19,7 +19,7 @@
         <!--背景色-->
         <item name="android:windowBackground">@color/windowsBackground</item>
 
-        <!--设置没有Title-->
+        <!--设置没有Title,也就是是否显示状态栏下面的bar-->
         <item name="windowActionBar">false</item>
         <item name="android:windowNoTitle">true</item>
         <item name="windowNoTitle">true</item>
