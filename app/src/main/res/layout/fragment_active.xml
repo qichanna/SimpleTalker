@@ -4,13 +4,10 @@
     android:layout_height="match_parent"
     tools:context="com.liqi.simpletalker.frags.main.ActiveFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_gravity="center"
-        android:textColor="@color/textPrimary"
+    <com.liqi.common.widget.GalleyView
+        android:id="@+id/galleyView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/action_home"
-        android:gravity="center"/>
+        android:padding="1dp"/>
 
 </FrameLayout>

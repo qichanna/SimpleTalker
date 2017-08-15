@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.liqi.common.widget.SquareLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -30,6 +32,8 @@
         android:drawablePadding="0dp"
         android:enabled="false"
         android:padding="0dp"
-        android:visibility="gone"/>
+        android:visibility="gone"
+        app:buttonTint="@color/cb_gallery"
+        tools:visibility="visible"/>
 
 </com.liqi.common.widget.SquareLayout>
