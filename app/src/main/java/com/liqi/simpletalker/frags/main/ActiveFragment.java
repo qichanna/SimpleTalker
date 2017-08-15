@@ -1,21 +1,16 @@
 package com.liqi.simpletalker.frags.main;
 
 
-import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
 import com.liqi.common.app.Fragment;
-import com.liqi.common.widget.GalleyView;
+import com.liqi.common.widget.GalleryView;
 import com.liqi.simpletalker.R;
 
 import butterknife.BindView;
 
 
 public class ActiveFragment extends Fragment {
-    @BindView(R.id.galleyView)
-    GalleyView mgalley;
+    @BindView(R.id.galleryView)
+    GalleryView mgalley;
 
 
     public ActiveFragment() {
@@ -31,7 +26,7 @@ public class ActiveFragment extends Fragment {
     protected void initData() {
         super.initData();
 
-        mgalley.setup(getLoaderManager(), new GalleyView.SelectedChangeListener() {
+        mgalley.setup(getLoaderManager(), new GalleryView.SelectedChangeListener() {
             @Override
             public void onSelectedCountChanged(int count) {
 

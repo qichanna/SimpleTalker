@@ -18,6 +18,7 @@ import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.ViewTarget;
 import com.liqi.common.app.Activity;
 import com.liqi.common.widget.PortraitView;
+import com.liqi.simpletalker.activities.AccountActivity;
 import com.liqi.simpletalker.frags.main.ActiveFragment;
 import com.liqi.simpletalker.frags.main.ContactFragment;
 import com.liqi.simpletalker.frags.main.GroupFragment;
@@ -96,7 +97,7 @@ public class MainActivity extends Activity implements BottomNavigationView.OnNav
 
     @OnClick(R.id.btn_action)
     void onActionClick(){
-
+        AccountActivity.show(this);
     }
 
 
