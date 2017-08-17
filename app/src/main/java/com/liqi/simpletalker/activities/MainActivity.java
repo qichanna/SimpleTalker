@@ -1,5 +1,7 @@
-package com.liqi.simpletalker;
+package com.liqi.simpletalker.activities;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
@@ -18,7 +20,9 @@ import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.ViewTarget;
 import com.liqi.common.app.Activity;
 import com.liqi.common.widget.PortraitView;
+import com.liqi.simpletalker.R;
 import com.liqi.simpletalker.activities.AccountActivity;
+import com.liqi.simpletalker.frags.assist.PermissionsFragment;
 import com.liqi.simpletalker.frags.main.ActiveFragment;
 import com.liqi.simpletalker.frags.main.ContactFragment;
 import com.liqi.simpletalker.frags.main.GroupFragment;
@@ -52,6 +56,14 @@ public class MainActivity extends Activity implements BottomNavigationView.OnNav
     FloatingActionButton mAction;
 
     private NavHelper<Integer> mNavHelper;
+
+    /**
+     * MainActivity 显示的入口
+     * @param context 上下文
+     */
+    public static void show(Context context){
+        context.startActivity(new Intent(context,MainActivity.class));
+    }
 
     @Override
     protected int getContentLayoutId() {

@@ -9,8 +9,8 @@ import butterknife.BindView;
 
 
 public class ActiveFragment extends Fragment {
-    @BindView(R.id.galleryView)
-    GalleryView mgalley;
+//    @BindView(R.id.galleryView)
+//    GalleryView mgalley;
 
 
     public ActiveFragment() {
@@ -26,11 +26,11 @@ public class ActiveFragment extends Fragment {
     protected void initData() {
         super.initData();
 
-        mgalley.setup(getLoaderManager(), new GalleryView.SelectedChangeListener() {
-            @Override
-            public void onSelectedCountChanged(int count) {
-
-            }
-        });
+//        mgalley.setup(getLoaderManager(), new GalleryView.SelectedChangeListener() {
+//            @Override
+//            public void onSelectedCountChanged(int count) {
+//
+//            }
+//        });
     }
 }
