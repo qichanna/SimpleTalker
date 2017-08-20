@@ -1,4 +1,4 @@
-package com.liqi.simpletalker.frags.account;
+package com.liqi.simpletalker.frags.user;
 
 
 import android.content.Intent;

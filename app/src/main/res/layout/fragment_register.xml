@@ -1,0 +1,21 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:background="@drawable/bg_src_tianjin"
+    tools:context="com.liqi.simpletalker.frags.account.RegisterFragment">
+
+    <android.support.v7.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_gradient_black"
+        android:paddingTop="@dimen/len_40"
+        android:paddingBottom="@dimen/len_28"
+        app:title="@string/label_login_welcome"
+        app:subtitleTextAppearance="@style/TextAppearance.AppCompat.Display1">
+
+    </android.support.v7.widget.Toolbar>
+
+</LinearLayout>
