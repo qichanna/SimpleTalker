@@ -7,8 +7,8 @@ package com.liqi.factory.presenter;
 public class BasePresenter<T extends BaseContract.View> implements BaseContract.Presenter{
     private T mView;
 
-    public BasePresenter(T mView) {
-
+    public BasePresenter(T view) {
+        setView(view);
     }
 
     /**

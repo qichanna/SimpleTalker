@@ -1,0 +1,61 @@
+package com.liqi.talker.factory.model.api.account;
+
+import com.liqi.talker.factory.model.db.User;
+
+/**
+ * Created by liqi7 on 2017/8/22.
+ */
+
+public class AccountRspModel {
+    //用户基本信息
+    private User usr;
+    // 当前登录帐号
+    private String account;
+    // 当前登录成功后获取的Token
+    // 可以通过Token获取用户的所有信息
+    private String token;
+    // 标示是否已经绑定到了设备的PushId
+    private boolean isBind;
+
+    public User getUsr() {
+        return usr;
+    }
+
+    public void setUsr(User usr) {
+        this.usr = usr;
+    }
+
+    public String getAccount() {
+        return account;
+    }
+
+    public void setAccount(String account) {
+        this.account = account;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    public boolean isBind() {
+        return isBind;
+    }
+
+    public void setBind(boolean bind) {
+        isBind = bind;
+    }
+
+    @Override
+    public String toString() {
+        return "AccountRspModel{" +
+                "usr=" + usr +
+                ", account='" + account + '\'' +
+                ", token='" + token + '\'' +
+                ", isBind=" + isBind +
+                '}';
+    }
+}

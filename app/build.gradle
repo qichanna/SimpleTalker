@@ -10,6 +10,14 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        //个推相关参数
+        manifestPlaceholders = [
+                GETUI_APP_ID    : "Rr51sROK4B8FXbq0TUjAF5",
+                GETUI_APP_KEY   : "eurxTdqHECAKgc7s4xtUe9",
+                GETUI_APP_SECRET: "wvAHiSQwuJ79Fp1tBy8Td8",
+                PACKAGE_NAME    : applicationId
+        ]
     }
     buildTypes {
         release {
@@ -33,14 +41,22 @@ dependencies {
     compile "net.qiujuer.genius:ui:$rootProject.ext.geniusVersion"
     compile "net.qiujuer.genius:res:$rootProject.ext.geniusVersion"
 
+    //头像库
     compile "de.hdodenhof:circleimageview:$rootProject.ext.circleimageviewVersion"
+    // 图片加载库Glide
     compile "com.github.bumptech.glide:glide:$rootProject.ext.glideVersion"
 
+    // 下面两个是butterknife,第二个是butterknife注解
     compile "com.jakewharton:butterknife:$rootProject.ext.butterknifeVersion"
     annotationProcessor "com.jakewharton:butterknife-compiler:$rootProject.ext.butterknifeVersion"
 
+    // 图片剪切库
     compile "com.yalantis:ucrop:$rootProject.ext.ucropVersion"
+    //权限库
     compile "pub.devrel:easypermissions:$rootProject.ext.easyPMVersion"
+
+    // 个推
+    compile "com.getui:sdk:$rootProject.ext.getuiVersion"
 
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.android.support:support-v4:25.3.1'
