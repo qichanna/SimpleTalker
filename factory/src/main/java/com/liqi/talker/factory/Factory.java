@@ -7,6 +7,7 @@ import com.google.gson.GsonBuilder;
 import com.liqi.common.app.Application;
 import com.liqi.factory.data.DataSource;
 import com.liqi.talker.factory.model.api.RspModel;
+import com.liqi.talker.factory.persistence.Account;
 
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
@@ -37,6 +38,14 @@ public class Factory {
                 // 设置一个过滤器，数据库级别的Model不进行Json转换
 //                .setExclusionStrategies()
                 .create();
+    }
+
+    /**
+     * Factory中的初始化
+     */
+    public static void setup(){
+        // 持久化的数据进行初始化
+        Account.load(app());
     }
 
     /**
@@ -136,6 +145,14 @@ public class Factory {
      * 收到账户退出的消息需要进行账户退出重新登录
      */
     private void logout(){
+
+    }
+
+    /**
+     * 处理推送来的消息
+     * @param message
+     */
+    public static void dispatchPush(String message){
 
     }
 }

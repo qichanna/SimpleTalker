@@ -9,6 +9,7 @@ import com.liqi.talker.factory.model.api.account.RegisterModel;
 import com.liqi.talker.factory.model.db.User;
 import com.liqi.talker.factory.net.Network;
 import com.liqi.talker.factory.net.RemoteService;
+import com.liqi.talker.factory.persistence.Account;
 
 import retrofit2.Call;
 import retrofit2.Callback;

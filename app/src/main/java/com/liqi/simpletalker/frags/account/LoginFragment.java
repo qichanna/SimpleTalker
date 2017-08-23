@@ -4,12 +4,15 @@ package com.liqi.simpletalker.frags.account;
 import android.content.Context;
 
 import com.liqi.common.app.Fragment;
+import com.liqi.common.app.PresenterFragment;
 import com.liqi.simpletalker.R;
+import com.liqi.talker.factory.presenter.account.LoginContract;
 
 /**
  *  登录
  */
-public class LoginFragment extends Fragment {
+public class LoginFragment extends PresenterFragment<LoginContract.Presenter>
+        implements LoginContract.View{
     private AccountTriggrt mAccountTriggrt;
 
     public LoginFragment() {
@@ -24,6 +27,11 @@ public class LoginFragment extends Fragment {
     }
 
     @Override
+    protected LoginContract.Presenter initPresenter() {
+        return null;
+    }
+
+    @Override
     protected int getContentLayoutId() {
         return R.layout.fragment_login;
     }
@@ -34,5 +42,10 @@ public class LoginFragment extends Fragment {
 
         // 进行一次切换，默认切换为注册界面
         mAccountTriggrt.triggerView();
+    }
+
+    @Override
+    public void loginSuccess() {
+
     }
 }
