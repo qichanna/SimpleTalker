@@ -6,11 +6,14 @@ package com.liqi.talker.factory.net;
 
 import com.liqi.talker.factory.model.api.RspModel;
 import com.liqi.talker.factory.model.api.account.AccountRspModel;
+import com.liqi.talker.factory.model.api.account.LoginModel;
 import com.liqi.talker.factory.model.api.account.RegisterModel;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
+import retrofit2.http.Path;
 
 /**
  * 网络请求的所有的接口
@@ -24,4 +27,21 @@ public interface RemoteService {
      */
     @POST("account/register")
     Call<RspModel<AccountRspModel>> accountRegister(@Body RegisterModel model);
+
+    /**
+     * 登录接口
+     * @param model
+     * @return
+     */
+    @POST("account/login")
+    Call<RspModel<AccountRspModel>> accountLogin(@Body LoginModel model);
+
+
+    /**
+     * 绑定设备Id
+     * @param pushId
+     * @return
+     */
+    @POST("account/bind/{pushId}")
+    Call<RspModel<AccountRspModel>> accountBind(@Path(encoded = true, value = "pushId") String pushId);
 }
