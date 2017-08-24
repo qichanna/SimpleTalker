@@ -2,8 +2,13 @@ package com.liqi.talker.factory.persistence;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.text.TextUtils;
 
 import com.liqi.talker.factory.Factory;
+import com.liqi.talker.factory.model.api.account.AccountRspModel;
+import com.liqi.talker.factory.model.db.User;
+import com.liqi.talker.factory.model.db.User_Table;
+import com.raizlabs.android.dbflow.sql.language.SQLite;
 
 /**
  * Created by liqi7 on 2017/8/23.
@@ -29,9 +34,10 @@ public class Account {
 
     /**
      * 存储数据到XML文件,持久化
+     *
      * @param context
      */
-    private static void save(Context context){
+    private static void save(Context context) {
         // 获取数据持久化的SP
         SharedPreferences sp = context.getSharedPreferences(Account.class.getName(),
                 Context.MODE_PRIVATE);
@@ -44,9 +50,10 @@ public class Account {
 
     /**
      * 进行数据加载
+     *
      * @param context
      */
-    public static void load(Context context){
+    public static void load(Context context) {
         SharedPreferences sp = context.getSharedPreferences(Account.class.getName(),
                 Context.MODE_PRIVATE);
         pushId = sp.getString(KEY_PUSH_ID, "");
@@ -55,6 +62,7 @@ public class Account {
 
     /**
      * 获取推送Id
+     *
      * @return
      */
     public static String getPushId() {
@@ -63,6 +71,7 @@ public class Account {
 
     /**
      * 设置并存储设备的Id
+     *
      * @param pushId
      */
     public static void setPushId(String pushId) {
@@ -75,8 +84,18 @@ public class Account {
      *
      * @return True已登录
      */
-    public static boolean isLogin(){
-        return true;
+    public static boolean isLogin() {
+        // 用户Id 和 Token 不为空
+        return !TextUtils.isEmpty(userId)
+                 && TextUtils.isEmpty(token);
+    }
+
+    /**
+     * 是否已经完善了用户信息
+     * @return
+     */
+    public static boolean isComplete(){
+        return isLogin();
     }
 
     /**
@@ -85,11 +104,27 @@ public class Account {
      * @return True已绑定
      */
     public static boolean isBind() {
-        return false;
+        return isBind;
     }
 
-    public static void setBind(boolean isBind){
+    public static void setBind(boolean isBind) {
         Account.isBind = isBind;
         Account.save(Factory.app());
+    }
+
+    public static void login(AccountRspModel model) {
+        // 存储当前登录的账户, token, 用户Id，方便从数据库中查询我的信息
+        Account.token = model.getToken();
+        Account.account = model.getAccount();
+        Account.userId = model.getUser().getId();
+        save(Factory.app());
+    }
+
+    public static User getUser(){
+        // 如果为null返回一个new的User，其次从数据库查询
+        return TextUtils.isEmpty(userId) ? new User() : SQLite.select()
+                .from(User.class)
+                .where(User_Table.id.eq(userId))
+                .querySingle();
     }
 }

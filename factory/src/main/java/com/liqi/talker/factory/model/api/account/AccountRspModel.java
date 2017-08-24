@@ -8,7 +8,7 @@ import com.liqi.talker.factory.model.db.User;
 
 public class AccountRspModel {
     //用户基本信息
-    private User usr;
+    private User user;
     // 当前登录帐号
     private String account;
     // 当前登录成功后获取的Token
@@ -17,12 +17,12 @@ public class AccountRspModel {
     // 标示是否已经绑定到了设备的PushId
     private boolean isBind;
 
-    public User getUsr() {
-        return usr;
+    public User getUser() {
+        return user;
     }
 
     public void setUsr(User usr) {
-        this.usr = usr;
+        this.user = usr;
     }
 
     public String getAccount() {
@@ -52,7 +52,7 @@ public class AccountRspModel {
     @Override
     public String toString() {
         return "AccountRspModel{" +
-                "usr=" + usr +
+                "usr=" + user +
                 ", account='" + account + '\'' +
                 ", token='" + token + '\'' +
                 ", isBind=" + isBind +

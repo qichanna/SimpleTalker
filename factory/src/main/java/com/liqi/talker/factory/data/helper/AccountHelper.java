@@ -55,16 +55,38 @@ public class AccountHelper {
                 if (rspModel.success()){
                     //拿到实体
                     AccountRspModel accountRspModel = rspModel.getResult();
+                    // 获取我的信息
+                    User user = accountRspModel.getUser();
+                    // 第一种保存
+                    user.save();
+
+                        /*
+                        // 第二种通过getModelAdapter
+                        FlowManager.getModelAdapter(User.class).save(user);
+
+                        // 第三种, 事物中
+                        DatabaseDefinition definition = FlowManager.getDatabase(AppDatabase.class);
+                        definition.beginTransactionAsync(new ITransaction() {
+                            @Override
+                            public void execute(DatabaseWrapper databaseWrapper) {
+                                FlowManager.getModelAdapter(User.class)
+                                        .save(user);
+                            }
+                        }).build().execute();
+                        */
+
+                    // 同步到XML持久化中
+
+                    Account.login(accountRspModel);
+
+
                     // 判断绑定状态,是否绑定设备
                     if(accountRspModel.isBind()){
-                        User user = accountRspModel.getUsr();
-                        // 写入数据库
+                        // 然后返回
                         callback.onDataLoaded(user);
                     }else {
-                        // 进行绑定的换气
-//                        bindPush(callback);
-                        User user = accountRspModel.getUsr();
-                        callback.onDataLoaded(user);
+                        // 进行绑定的唤起
+                        bindPush(callback);
                     }
                 }else {
                     Factory.decodeRspCode(rspModel,callback);
@@ -79,6 +101,6 @@ public class AccountHelper {
     }
 
     public static void bindPush(final DataSource.Callback<User> callback){
-        callback.onDataNotAvailable(R.string.app_name);
+        Account.setBind(true);
     }
 }

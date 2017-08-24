@@ -1,17 +1,33 @@
 package com.liqi.talker.factory.model.db;
 
+import com.raizlabs.android.dbflow.annotation.Column;
+import com.raizlabs.android.dbflow.annotation.Database;
+import com.raizlabs.android.dbflow.annotation.PrimaryKey;
+import com.raizlabs.android.dbflow.annotation.Table;
+import com.raizlabs.android.dbflow.structure.BaseModel;
+
 import java.util.Date;
 
 /**
  * Created by liqi7 on 2017/8/22.
  */
+@Table(database = AppDatabase.class)
+public class User extends BaseModel{
+    public static final int SEX_MAN = 1;
+    public static final int SEX_WOMAN = 2;
 
-public class User {
+    // 主键
+    @PrimaryKey
     private String id;
+    @Column
     private String name;
+    @Column
     private String phone;
+    @Column
     private String portrait;
+    @Column
     private String desc;
+    @Column
     private int sex = 0;
 
     // 我对某人的备注信息, 也应该写入到数据库中
@@ -115,5 +131,22 @@ public class User {
 
     public void setModifyAt(Date modifyAt) {
         this.modifyAt = modifyAt;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", phone='" + phone + '\'' +
+                ", portrait='" + portrait + '\'' +
+                ", desc='" + desc + '\'' +
+                ", sex=" + sex +
+                ", alias='" + alias + '\'' +
+                ", follows=" + follows +
+                ", following=" + following +
+                ", isFollow=" + isFollow +
+                ", modifyAt=" + modifyAt +
+                '}';
     }
 }
