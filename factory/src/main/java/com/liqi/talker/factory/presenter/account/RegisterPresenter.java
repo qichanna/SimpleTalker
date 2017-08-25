@@ -10,6 +10,7 @@ import com.liqi.talker.factory.R;
 import com.liqi.talker.factory.data.helper.AccountHelper;
 import com.liqi.talker.factory.model.api.account.RegisterModel;
 import com.liqi.talker.factory.model.db.User;
+import com.liqi.talker.factory.persistence.Account;
 
 import net.qiujuer.genius.kit.handler.Run;
 import net.qiujuer.genius.kit.handler.runable.Action;

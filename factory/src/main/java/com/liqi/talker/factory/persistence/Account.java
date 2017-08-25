@@ -45,6 +45,9 @@ public class Account {
         sp.edit()
                 .putString(KEY_PUSH_ID, pushId)
                 .putBoolean(KEY_IS_BIND, isBind)
+                .putString(KEY_TOKEN, token)
+                .putString(KEY_USER_ID, userId)
+                .putString(KEY_ACCOUNT, account)
                 .apply();
     }
 
@@ -58,6 +61,9 @@ public class Account {
                 Context.MODE_PRIVATE);
         pushId = sp.getString(KEY_PUSH_ID, "");
         isBind = sp.getBoolean(KEY_IS_BIND, false);
+        token = sp.getString(KEY_TOKEN, "");
+        userId = sp.getString(KEY_USER_ID, "");
+        account = sp.getString(KEY_ACCOUNT, "");
     }
 
     /**
@@ -87,7 +93,7 @@ public class Account {
     public static boolean isLogin() {
         // 用户Id 和 Token 不为空
         return !TextUtils.isEmpty(userId)
-                 && TextUtils.isEmpty(token);
+                 && !TextUtils.isEmpty(token);
     }
 
     /**
@@ -126,5 +132,13 @@ public class Account {
                 .from(User.class)
                 .where(User_Table.id.eq(userId))
                 .querySingle();
+    }
+
+    /**
+     * 获取当前登录的Token
+     * @return
+     */
+    public static String getToken(){
+        return token;
     }
 }
