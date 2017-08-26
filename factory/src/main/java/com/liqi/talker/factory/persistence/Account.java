@@ -101,7 +101,15 @@ public class Account {
      * @return
      */
     public static boolean isComplete(){
-        return isLogin();
+
+        if(isLogin()){
+            User self = getUser();
+            return !TextUtils.isEmpty(self.getDesc())
+                    && TextUtils.isEmpty(self.getPortrait())
+                    && self.getSex() != 0;
+        }
+        //
+        return false;
     }
 
     /**

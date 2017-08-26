@@ -27,6 +27,7 @@ import com.liqi.simpletalker.frags.main.ActiveFragment;
 import com.liqi.simpletalker.frags.main.ContactFragment;
 import com.liqi.simpletalker.frags.main.GroupFragment;
 import com.liqi.simpletalker.helper.NavHelper;
+import com.liqi.talker.factory.persistence.Account;
 
 import net.qiujuer.genius.ui.Ui;
 
@@ -63,6 +64,18 @@ public class MainActivity extends Activity implements BottomNavigationView.OnNav
      */
     public static void show(Context context){
         context.startActivity(new Intent(context,MainActivity.class));
+    }
+
+    @Override
+    protected boolean initArgs(Bundle bundle) {
+        if(Account.isComplete()){
+            // 判断用户信息是否完全，完全则走正常流程
+            return super.initArgs(bundle);
+        }else {
+            UserActivity.show(this);
+            return false;
+        }
+
     }
 
     @Override

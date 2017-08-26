@@ -32,10 +32,9 @@
             android:exported="true"
             android:permission="1000">
             <intent-filter>
-                <action android:name="com.igexin.sdk.action.${GETUI_APP_ID}"/>
+                <action android:name="com.igexin.sdk.action.${GETUI_APP_ID}" />
             </intent-filter>
         </receiver>
-
 
 
         <activity
@@ -60,7 +59,11 @@
             android:name="com.yalantis.ucrop.UCropActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
-        <activity android:name=".activities.UserActivity"></activity>
+        <activity
+            android:name=".activities.UserActivity"
+            android:label="@string/title_activity_user"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.Account" />
     </application>
 
 </manifest>
