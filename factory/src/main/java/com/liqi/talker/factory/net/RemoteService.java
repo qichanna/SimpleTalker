@@ -4,10 +4,12 @@ package com.liqi.talker.factory.net;
  * Created by liqi7 on 2017/8/22.
  */
 
+import com.liqi.talker.factory.model.UserCard.UserCard;
 import com.liqi.talker.factory.model.api.RspModel;
 import com.liqi.talker.factory.model.api.account.AccountRspModel;
 import com.liqi.talker.factory.model.api.account.LoginModel;
 import com.liqi.talker.factory.model.api.account.RegisterModel;
+import com.liqi.talker.factory.model.api.user.UserUpdateModel;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -44,4 +46,8 @@ public interface RemoteService {
      */
     @POST("account/bind/{pushId}")
     Call<RspModel<AccountRspModel>> accountBind(@Path(encoded = true, value = "pushId") String pushId);
+
+    // 用户更新的接口
+    @PUT("user")
+    Call<RspModel<UserCard>> userUpdate(@Body UserUpdateModel model);
 }

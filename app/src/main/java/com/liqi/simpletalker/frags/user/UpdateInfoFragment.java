@@ -3,18 +3,28 @@ package com.liqi.simpletalker.frags.user;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.util.Log;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.liqi.common.app.Application;
 import com.liqi.common.app.Fragment;
+import com.liqi.common.app.PresenterFragment;
 import com.liqi.common.widget.PortraitView;
 import com.liqi.simpletalker.R;
+import com.liqi.simpletalker.activities.MainActivity;
 import com.liqi.simpletalker.frags.media.GalleryFragment;
 import com.liqi.talker.factory.Factory;
 import com.liqi.talker.factory.net.UploadHelper;
+import com.liqi.talker.factory.presenter.user.UpdateInfoContract;
+import com.liqi.talker.factory.presenter.user.UpdateInfoPresenter;
 import com.yalantis.ucrop.UCrop;
+
+import net.qiujuer.genius.ui.widget.Loading;
 
 import java.io.File;
 
@@ -23,9 +33,27 @@ import butterknife.OnClick;
 
 import static android.app.Activity.RESULT_OK;
 
-public class UpdateInfoFragment extends Fragment {
+public class UpdateInfoFragment extends PresenterFragment<UpdateInfoContract.Presenter>
+        implements UpdateInfoContract.View{
+
+    @BindView(R.id.im_sex)
+    ImageView mSex;
+
+    @BindView(R.id.edit_desc)
+    EditText mDesc;
+
     @BindView(R.id.im_portrait)
     PortraitView mPortrait;
+
+    @BindView(R.id.loading)
+    Loading mLoading;
+
+    @BindView(R.id.btn_submit)
+    Button mSubmit;
+
+    // 头像的本地路径
+    private String mPortraitPath;
+    private boolean isMan = true;
 
     public UpdateInfoFragment() {
         // Required empty public constructor
@@ -74,11 +102,18 @@ public class UpdateInfoFragment extends Fragment {
             }
 
         } else if (resultCode == UCrop.RESULT_ERROR) {
-            final Throwable cropError = UCrop.getError(data);
+            Application.showToast(R.string.data_rsp_error_unknown);
         }
     }
 
+    /**
+     * 加载Uri到当前的头像中
+     * @param uri
+     */
     private void loadPortrait(Uri uri){
+        // 得到头像地址
+        mPortraitPath = uri.getPath();
+
         Glide.with(this)
                 .load(uri)
                 .asBitmap()
@@ -86,15 +121,47 @@ public class UpdateInfoFragment extends Fragment {
                 .into(mPortrait);
 
         // 拿到本地文件的地址
-        final String localPath = uri.getPath();
-        Log.e("TAG", "localPath:" + localPath);
+//        final String localPath = uri.getPath();
+//        Log.e("TAG", "localPath:" + localPath);
+//
+//        Factory.runOnAsync(new Runnable() {
+//            @Override
+//            public void run() {
+//                String url = UploadHelper.uploadPortrait(localPath);
+//                Log.e("TAG", "url:" + url);
+//            }
+//        });
+    }
 
-        Factory.runOnAsync(new Runnable() {
-            @Override
-            public void run() {
-                String url = UploadHelper.uploadPortrait(localPath);
-                Log.e("TAG", "url:" + url);
-            }
-        });
+    @OnClick(R.id.im_sex)
+    void onSexClick() {
+        // 性别图片点击的时候触发
+        isMan = !isMan; // 反向性别
+
+        Drawable drawable = getResources().getDrawable(isMan ?
+                R.drawable.ic_sex_man : R.drawable.ic_sex_woman);
+        mSex.setImageDrawable(drawable);
+        // 设置背景的层级，切换颜色
+        mSex.getBackground().setLevel(isMan ? 0 : 1);
+    }
+
+    @OnClick(R.id.btn_submit)
+    void onSubmitClick() {
+        String desc = mDesc.getText().toString();
+        // 调用P层进行注册
+        mPresenter.update(mPortraitPath, desc, isMan);
+    }
+
+    @Override
+    public void updateSucceed() {
+// 更新成功跳转到主界面
+        MainActivity.show(getContext());
+        getActivity().finish();
+    }
+
+    @Override
+    protected UpdateInfoContract.Presenter initPresenter() {
+        // 初始化Presenter
+        return new UpdateInfoPresenter(this);
     }
 }
