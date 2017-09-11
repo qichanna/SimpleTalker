@@ -72,6 +72,12 @@ public class SearchUserFragment extends PresenterFragment<SearchContract.Present
     }
 
     @Override
+    protected void initData() {
+        super.initData();
+        search("");
+    }
+
+    @Override
     public void search(String content) {
         // Activity -> Fragment -> Presenter -> Net
         mPresenter.search(content);
@@ -116,7 +122,7 @@ public class SearchUserFragment extends PresenterFragment<SearchContract.Present
                     .into(mPortraitView);
 
             mName.setText(userCard.getName());
-            mFollow.setEnabled(userCard.isFollow());
+            mFollow.setEnabled(!userCard.isFollow());
         }
     }
 }
