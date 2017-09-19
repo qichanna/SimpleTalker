@@ -1,5 +1,6 @@
 package com.liqi.talker.factory.model.db;
 
+import com.liqi.factory.model.Author;
 import com.raizlabs.android.dbflow.annotation.Column;
 import com.raizlabs.android.dbflow.annotation.Database;
 import com.raizlabs.android.dbflow.annotation.PrimaryKey;
@@ -12,7 +13,7 @@ import java.util.Date;
  * Created by liqi7 on 2017/8/22.
  */
 @Table(database = AppDatabase.class)
-public class User extends BaseModel{
+public class User extends BaseModel implements Author{
     public static final int SEX_MAN = 1;
     public static final int SEX_WOMAN = 2;
 

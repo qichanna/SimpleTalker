@@ -22,7 +22,7 @@
         android:src="@drawable/default_portrait"/>
 
     <TextView
-        android:id="@+id/tet_name"
+        android:id="@+id/txt_name"
         android:layout_gravity="start|center_vertical"
         android:layout_weight="1"
         android:layout_width="0dp"
