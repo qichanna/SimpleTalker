@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.liqi.common.app.Fragment;
+import com.liqi.common.app.PresenterFragment;
 import com.liqi.common.widget.EmptyView;
 import com.liqi.common.widget.PortraitView;
 import com.liqi.common.widget.recycler.RecyclerAdapter;
@@ -19,10 +20,13 @@ import com.liqi.simpletalker.activities.MessageActivity;
 import com.liqi.simpletalker.frags.search.SearchUserFragment;
 import com.liqi.talker.factory.model.UserCard.UserCard;
 import com.liqi.talker.factory.model.db.User;
+import com.liqi.talker.factory.presenter.contact.ContactContract;
+import com.liqi.talker.factory.presenter.contact.ContactPresenter;
 
 import butterknife.BindView;
 
-public class ContactFragment extends Fragment {
+public class ContactFragment extends PresenterFragment<ContactContract.Presenter>
+        implements ContactContract.View{
 
     @BindView(R.id.empty)
     EmptyView mEmptyView;
@@ -74,6 +78,22 @@ public class ContactFragment extends Fragment {
         // 初始化占位布局
         mEmptyView.bind(mRecycler);
         setPlaceHolderView(mEmptyView);
+    }
+
+    @Override
+    protected ContactContract.Presenter initPresenter() {
+        // 初始化Presenter
+        return new ContactPresenter(this);
+    }
+
+    @Override
+    public RecyclerAdapter<User> getRecyclerAdapter() {
+        return mAdapter;
+    }
+
+    @Override
+    public void onAdapterDataChanged() {
+        mPlaceHolderView.triggerOkOrEmpty(mAdapter.getItemCount() > 0);
     }
 
     class ViewHolder extends RecyclerAdapter.ViewHolder<User>{
