@@ -32,15 +32,19 @@ public class User extends BaseModel implements Author{
     private int sex = 0;
 
     // 我对某人的备注信息, 也应该写入到数据库中
+    @Column
     private String alias;
 
     // 用户关注人的数量
+    @Column
     private int follows;
 
     // 用户粉丝的数量
+    @Column
     private int following;
 
     // 我与当前User的关系状态,是否已经关注了这个人
+    @Column
     private boolean isFollow;
 
     //时间字段

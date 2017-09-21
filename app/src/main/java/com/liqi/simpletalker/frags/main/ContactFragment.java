@@ -81,6 +81,13 @@ public class ContactFragment extends PresenterFragment<ContactContract.Presenter
     }
 
     @Override
+    protected void onFirstInit() {
+        super.onFirstInit();
+        // 进行一次数据加载
+        mPresenter.start();
+    }
+
+    @Override
     protected ContactContract.Presenter initPresenter() {
         // 初始化Presenter
         return new ContactPresenter(this);
