@@ -2,6 +2,7 @@ package com.liqi.talker.factory.presenter.contact;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
+import android.support.v7.util.DiffUtil;
 
 import com.liqi.factory.data.DataSource;
 import com.liqi.factory.presenter.BasePresenter;
@@ -88,5 +89,12 @@ public class ContactPresenter extends BasePresenter<ContactContract.View>
         // 2.如果刷新数据库，或者从网络刷新，最终刷新的时候是全部刷新
         // 3.本地刷新和网络刷新，在添加到界面的时候会有可能冲突,导致数据显示异常
         // 3.如果识别已经在数据库中有这样的数据了
+    }
+
+    private void diff(List<User> newList, List<User> oldList){
+        DiffUtil.DiffResult result = DiffUtil.calculateDiff(null);
+
+        //
+        result.dispatchUpdatesTo(getView().getRecyclerAdapter());
     }
 }
