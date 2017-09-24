@@ -12,6 +12,7 @@ import com.liqi.talker.factory.model.db.AppDatabase;
 import com.liqi.talker.factory.model.db.User;
 import com.liqi.talker.factory.model.db.User_Table;
 import com.liqi.talker.factory.persistence.Account;
+import com.liqi.talker.factory.utils.DiffUiDataCallback;
 import com.raizlabs.android.dbflow.config.DatabaseDefinition;
 import com.raizlabs.android.dbflow.config.FlowManager;
 import com.raizlabs.android.dbflow.sql.language.SQLite;
@@ -79,8 +80,13 @@ public class ContactPresenter extends BasePresenter<ContactContract.View>
                 }).build().execute();
 
                 // 网络的数据往往是新的，我们需要直接刷新到界面
-                getView().getRecyclerAdapter().replace(users);
-                getView().onAdapterDataChanged();
+//                getView().getRecyclerAdapter().replace(users);
+//                getView().onAdapterDataChanged();
+
+                List<User> old = getView().getRecyclerAdapter().getItems();
+                // 会导致数据顺序全部为新的数据集合
+                //getView().getRecyclerAdapter().replace(users);
+                diff(old,users);
             }
         });
 
@@ -91,10 +97,16 @@ public class ContactPresenter extends BasePresenter<ContactContract.View>
         // 3.如果识别已经在数据库中有这样的数据了
     }
 
-    private void diff(List<User> newList, List<User> oldList){
-        DiffUtil.DiffResult result = DiffUtil.calculateDiff(null);
+    private void diff(List<User> oldList, List<User> newList){
+        // 进行数据对比
+        DiffUtil.Callback callback = new DiffUiDataCallback<>(oldList,newList);
+        DiffUtil.DiffResult result = DiffUtil.calculateDiff(callback);
 
-        //
+        // 在对比完成后进行数据的赋值
+        getView().getRecyclerAdapter().replace(newList);
+
+        // 尝试刷新界面
         result.dispatchUpdatesTo(getView().getRecyclerAdapter());
+        getView().onAdapterDataChanged();
     }
 }
