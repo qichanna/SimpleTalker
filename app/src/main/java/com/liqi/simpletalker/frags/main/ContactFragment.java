@@ -17,6 +17,7 @@ import com.liqi.common.widget.PortraitView;
 import com.liqi.common.widget.recycler.RecyclerAdapter;
 import com.liqi.simpletalker.R;
 import com.liqi.simpletalker.activities.MessageActivity;
+import com.liqi.simpletalker.activities.PersonalActivity;
 import com.liqi.simpletalker.frags.search.SearchUserFragment;
 import com.liqi.talker.factory.model.UserCard.UserCard;
 import com.liqi.talker.factory.model.db.User;
@@ -24,6 +25,7 @@ import com.liqi.talker.factory.presenter.contact.ContactContract;
 import com.liqi.talker.factory.presenter.contact.ContactPresenter;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 public class ContactFragment extends PresenterFragment<ContactContract.Presenter>
         implements ContactContract.View{
@@ -122,6 +124,12 @@ public class ContactFragment extends PresenterFragment<ContactContract.Presenter
             mPortraitView.setup(Glide.with(ContactFragment.this),user);
             mName.setText(user.getName());
             mDesc.setText(user.getDesc());
+        }
+
+        @OnClick(R.id.im_portrait)
+        void onPortraitCLick(){
+            // 显示信息
+            PersonalActivity.show(getContext(),mData.getId());
         }
     }
 }

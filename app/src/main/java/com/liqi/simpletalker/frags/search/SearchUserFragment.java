@@ -16,6 +16,7 @@ import com.liqi.common.widget.PortraitView;
 import com.liqi.common.widget.recycler.RecyclerAdapter;
 import com.liqi.factory.presenter.BaseContract;
 import com.liqi.simpletalker.R;
+import com.liqi.simpletalker.activities.PersonalActivity;
 import com.liqi.simpletalker.activities.SearchActivity;
 import com.liqi.talker.factory.model.UserCard.UserCard;
 import com.liqi.talker.factory.presenter.contact.FollowContract;
@@ -135,6 +136,12 @@ public class SearchUserFragment extends PresenterFragment<SearchContract.Present
             mPortraitView.setup(Glide.with(SearchUserFragment.this),userCard);
             mName.setText(userCard.getName());
             mFollow.setEnabled(!userCard.isFollow());
+        }
+
+        @OnClick(R.id.im_portrait)
+        void onPortraitCLick(){
+            // 显示信息
+            PersonalActivity.show(getContext(),mData.getId());
         }
 
         @OnClick(R.id.im_follow)
