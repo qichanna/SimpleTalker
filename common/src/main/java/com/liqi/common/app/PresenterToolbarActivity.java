@@ -8,13 +8,22 @@ import com.liqi.factory.presenter.BaseContract;
 
 public abstract class PresenterToolbarActivity<Presenter extends BaseContract.Presenter>
         extends ToolbarActivity implements BaseContract.View<Presenter>{
-    protected BaseContract.Presenter mPresenter;
+    protected Presenter mPresenter;
 
     @Override
     protected void initBefore() {
         super.initBefore();
         // 初始化Presenter
         initPresenter();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        // 界面关闭时进行销毁的操作
+        if(mPresenter != null){
+            mPresenter.destroy();
+        }
     }
 
     /**

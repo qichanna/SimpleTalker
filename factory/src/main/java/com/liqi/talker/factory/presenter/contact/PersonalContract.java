@@ -14,6 +14,8 @@ public interface PersonalContract {
     }
 
     interface View extends BaseContract.View<Presenter>{
+        String getUserId();
+
         // 加载数据完成
         void onLoadDone(User user);
 

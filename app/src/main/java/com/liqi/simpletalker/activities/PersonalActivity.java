@@ -20,6 +20,7 @@ import com.liqi.common.widget.PortraitView;
 import com.liqi.simpletalker.R;
 import com.liqi.talker.factory.model.db.User;
 import com.liqi.talker.factory.presenter.contact.PersonalContract;
+import com.liqi.talker.factory.presenter.contact.PersonalPresenter;
 
 import net.qiujuer.genius.res.Resource;
 
@@ -74,6 +75,12 @@ public class PersonalActivity extends PresenterToolbarActivity<PersonalContract.
     }
 
     @Override
+    protected void initData() {
+        super.initData();
+        mPresenter.start();
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = getMenuInflater();
         menuInflater.inflate(R.menu.personal, menu);
@@ -93,8 +100,11 @@ public class PersonalActivity extends PresenterToolbarActivity<PersonalContract.
 
     @OnClick(R.id.btn_say_hello)
     void onSayHelloClick() {
-        // TODO
-        //MessageActivity.show(this, null);
+        // 发起聊天的点击
+        User user = mPresenter.getUserPersonal();
+        if(user == null)
+            return;
+        MessageActivity.show(this, user);
     }
 
 
@@ -137,6 +147,6 @@ public class PersonalActivity extends PresenterToolbarActivity<PersonalContract.
 
     @Override
     protected PersonalContract.Presenter initPresenter() {
-        return null;
+        return new PersonalPresenter(this);
     }
 }
