@@ -9,10 +9,8 @@ import com.liqi.talker.factory.model.api.user.UserUpdateModel;
 import com.liqi.talker.factory.model.db.User;
 import com.liqi.talker.factory.net.Network;
 import com.liqi.talker.factory.net.RemoteService;
-import com.liqi.talker.factory.presenter.contact.FollowPresenter;
 import com.raizlabs.android.dbflow.sql.language.SQLite;
 
-import java.io.IOException;
 import java.util.List;
 
 import retrofit2.Call;
@@ -142,7 +140,7 @@ public class UserHelper {
 
     // 从本地查询一个用户的信息
     public static User findFromLocal(String id){
-        SQLite.select()
+        return SQLite.select()
                 .from(User.class)
                 .where(User_Table.id.eq(id))
                 .querySingle();
