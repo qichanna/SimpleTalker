@@ -7,6 +7,7 @@ import com.liqi.talker.factory.model.UserCard.UserCard;
 import com.liqi.talker.factory.model.api.RspModel;
 import com.liqi.talker.factory.model.api.user.UserUpdateModel;
 import com.liqi.talker.factory.model.db.User;
+import com.liqi.talker.factory.model.db.User_Table;
 import com.liqi.talker.factory.net.Network;
 import com.liqi.talker.factory.net.RemoteService;
 import com.raizlabs.android.dbflow.sql.language.SQLite;

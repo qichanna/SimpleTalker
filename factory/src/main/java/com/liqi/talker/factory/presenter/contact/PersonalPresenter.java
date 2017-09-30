@@ -65,6 +65,6 @@ public class PersonalPresenter extends BasePresenter<PersonalContract.View>
 
     @Override
     public User getUserPersonal() {
-        return null;
+        return user;
     }
 }
