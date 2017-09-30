@@ -117,7 +117,7 @@ public class MainActivity extends Activity implements BottomNavigationView.OnNav
         mPortrait.setup(Glide.with(this),Account.getUser());
     }
 
-    @OnClick(R.id.im_search)
+    @OnClick(R.id.im_portrait)
     void onPortraitClick(){
         PersonalActivity.show(this,Account.getUserId());
     }
