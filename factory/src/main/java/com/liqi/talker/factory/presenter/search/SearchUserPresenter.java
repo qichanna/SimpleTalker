@@ -5,7 +5,7 @@ import android.support.annotation.StringRes;
 import com.liqi.factory.data.DataSource;
 import com.liqi.factory.presenter.BasePresenter;
 import com.liqi.talker.factory.data.helper.UserHelper;
-import com.liqi.talker.factory.model.UserCard.UserCard;
+import com.liqi.talker.factory.model.card.UserCard;
 
 import net.qiujuer.genius.kit.handler.Run;
 import net.qiujuer.genius.kit.handler.runable.Action;

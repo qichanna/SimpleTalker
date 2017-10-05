@@ -7,7 +7,7 @@ import android.support.v7.util.DiffUtil;
 import com.liqi.factory.data.DataSource;
 import com.liqi.factory.presenter.BasePresenter;
 import com.liqi.talker.factory.data.helper.UserHelper;
-import com.liqi.talker.factory.model.UserCard.UserCard;
+import com.liqi.talker.factory.model.card.UserCard;
 import com.liqi.talker.factory.model.db.AppDatabase;
 import com.liqi.talker.factory.model.db.User;
 import com.liqi.talker.factory.model.db.User_Table;

@@ -4,7 +4,7 @@ package com.liqi.talker.factory.net;
  * Created by liqi7 on 2017/8/22.
  */
 
-import com.liqi.talker.factory.model.UserCard.UserCard;
+import com.liqi.talker.factory.model.card.UserCard;
 import com.liqi.talker.factory.model.api.RspModel;
 import com.liqi.talker.factory.model.api.account.AccountRspModel;
 import com.liqi.talker.factory.model.api.account.LoginModel;

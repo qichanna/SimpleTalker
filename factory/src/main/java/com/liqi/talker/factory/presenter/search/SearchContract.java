@@ -2,8 +2,8 @@ package com.liqi.talker.factory.presenter.search;
 
 
 import com.liqi.factory.presenter.BaseContract;
-import com.liqi.talker.factory.model.UserCard.GroupCard;
-import com.liqi.talker.factory.model.UserCard.UserCard;
+import com.liqi.talker.factory.model.card.GroupCard;
+import com.liqi.talker.factory.model.card.UserCard;
 
 import java.util.List;
 

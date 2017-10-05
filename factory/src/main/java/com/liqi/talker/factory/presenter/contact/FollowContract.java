@@ -1,7 +1,7 @@
 package com.liqi.talker.factory.presenter.contact;
 
 import com.liqi.factory.presenter.BaseContract;
-import com.liqi.talker.factory.model.UserCard.UserCard;
+import com.liqi.talker.factory.model.card.UserCard;
 
 /**
  * Created by liqi on 2017/9/17.

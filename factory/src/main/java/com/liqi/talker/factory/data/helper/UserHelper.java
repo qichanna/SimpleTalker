@@ -3,7 +3,7 @@ package com.liqi.talker.factory.data.helper;
 import com.liqi.factory.data.DataSource;
 import com.liqi.talker.factory.Factory;
 import com.liqi.talker.factory.R;
-import com.liqi.talker.factory.model.UserCard.UserCard;
+import com.liqi.talker.factory.model.card.UserCard;
 import com.liqi.talker.factory.model.api.RspModel;
 import com.liqi.talker.factory.model.api.user.UserUpdateModel;
 import com.liqi.talker.factory.model.db.User;

@@ -1,16 +1,12 @@
 package com.liqi.simpletalker.frags.main;
 
 
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.liqi.common.app.Fragment;
 import com.liqi.common.app.PresenterFragment;
 import com.liqi.common.widget.EmptyView;
 import com.liqi.common.widget.PortraitView;
@@ -18,8 +14,6 @@ import com.liqi.common.widget.recycler.RecyclerAdapter;
 import com.liqi.simpletalker.R;
 import com.liqi.simpletalker.activities.MessageActivity;
 import com.liqi.simpletalker.activities.PersonalActivity;
-import com.liqi.simpletalker.frags.search.SearchUserFragment;
-import com.liqi.talker.factory.model.UserCard.UserCard;
 import com.liqi.talker.factory.model.db.User;
 import com.liqi.talker.factory.presenter.contact.ContactContract;
 import com.liqi.talker.factory.presenter.contact.ContactPresenter;
