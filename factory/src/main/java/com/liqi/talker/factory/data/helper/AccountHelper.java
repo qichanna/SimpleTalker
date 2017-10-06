@@ -26,13 +26,14 @@ public class AccountHelper {
 
     /**
      * 注册接口，异步的调用
-     * @param model 传递一个注册的Modle进来
+     *
+     * @param model    传递一个注册的Modle进来
      * @param callback 成功与失败的接口回送
      */
-    public static void register(RegisterModel model, final DataSource.Callback<User> callback){
+    public static void register(RegisterModel model, final DataSource.Callback<User> callback) {
 
         // 调用Retrofit对我们的网络请求接口做代理
-        RemoteService service =Network.getRetrofit().create(RemoteService.class);
+        RemoteService service = Network.getRetrofit().create(RemoteService.class);
         // 得到一个Call
         Call<RspModel<AccountRspModel>> call = service.accountRegister(model);
         // 异步请求
@@ -54,7 +55,7 @@ public class AccountHelper {
         call.enqueue(new AccountRspCallback(callback));
     }
 
-    public static void bindPush(final DataSource.Callback<User> callback){
+    public static void bindPush(final DataSource.Callback<User> callback) {
 //        Account.setBind(true);
         // 检查是否为空
         String pushId = Account.getPushId();
@@ -67,11 +68,11 @@ public class AccountHelper {
         call.enqueue(new AccountRspCallback(callback));
     }
 
-    private static class AccountRspCallback implements Callback<RspModel<AccountRspModel>>{
+    private static class AccountRspCallback implements Callback<RspModel<AccountRspModel>> {
 
         final DataSource.Callback<User> callback;
 
-        AccountRspCallback(DataSource.Callback<User> callback){
+        AccountRspCallback(DataSource.Callback<User> callback) {
             this.callback = callback;
         }
 
@@ -81,13 +82,15 @@ public class AccountHelper {
             // 请求成功返回
             // 从返回中得到我们的全局Model, 内部是使用Gson解析
             RspModel<AccountRspModel> rspModel = response.body();
-            if (rspModel.success()){
+            if (rspModel.success()) {
                 //拿到实体
                 AccountRspModel accountRspModel = rspModel.getResult();
                 // 获取我的信息
                 User user = accountRspModel.getUser();
+                DbHelper.save(User.class,user);
+
                 // 第一种保存
-                user.save();
+//                user.save();
 
                         /*
                         // 第二种通过getModelAdapter
@@ -110,18 +113,18 @@ public class AccountHelper {
 
 
                 // 判断绑定状态,是否绑定设备
-                if(accountRspModel.isBind()){
+                if (accountRspModel.isBind()) {
                     // 设置绑定状态为True
                     Account.setBind(true);
                     // 然后返回
-                    if(callback != null)
-                    callback.onDataLoaded(user);
-                }else {
+                    if (callback != null)
+                        callback.onDataLoaded(user);
+                } else {
                     // 进行绑定的唤起
                     bindPush(callback);
                 }
-            }else {
-                Factory.decodeRspCode(rspModel,callback);
+            } else {
+                Factory.decodeRspCode(rspModel, callback);
             }
         }
 
