@@ -3,9 +3,9 @@ package com.liqi.talker.factory.data.helper;
 import com.liqi.factory.data.DataSource;
 import com.liqi.talker.factory.Factory;
 import com.liqi.talker.factory.R;
-import com.liqi.talker.factory.model.card.UserCard;
 import com.liqi.talker.factory.model.api.RspModel;
 import com.liqi.talker.factory.model.api.user.UserUpdateModel;
+import com.liqi.talker.factory.model.card.UserCard;
 import com.liqi.talker.factory.model.db.User;
 import com.liqi.talker.factory.model.db.User_Table;
 import com.liqi.talker.factory.net.Network;
@@ -36,11 +36,14 @@ public class UserHelper {
                 RspModel<UserCard> rspModel = response.body();
                 if(rspModel.success()){
                     UserCard userCard = rspModel.getResult();
+                    // 唤起进行保存的操作
+                    Factory.getUserCenter().dispatch(userCard);
+
                     // 数据库的存储操作，需要把UserCard转换为User
                     // 保存用户信息
-                    User user = userCard.build();
+//                    User user = userCard.build();
                     // 异步统一的保存
-                    DbHelper.save(User.class,user);
+//                    DbHelper.save(User.class,user);
 //                    user.save();
                     // 返回成功
                     callback.onDataLoaded(userCard);
@@ -98,14 +101,18 @@ public class UserHelper {
                 RspModel<UserCard> rspModel = response.body();
                 if(rspModel.success()){
                     UserCard userCard = rspModel.getResult();
+                    // 唤起进行保存的操作
+                    Factory.getUserCenter().dispatch(userCard);
+
                     // 保存到本地数据库
-                    User user = userCard.build();
+//                    User user = userCard.build();
                     // 保存并通知联系人列表刷新
-                    DbHelper.save(User.class,user);
+//                    DbHelper.save(User.class,user);
 //                    user.save();
                     // TODO 通知联系人列表刷新
                     // 返回数据
-                    callback.onDataLoaded(rspModel.getResult());
+//                    callback.onDataLoaded(rspModel.getResult());
+                    callback.onDataLoaded(userCard);
                 }else {
                     Factory.decodeRspCode(rspModel, callback);
                 }
@@ -118,8 +125,8 @@ public class UserHelper {
         });
     }
 
-    // 刷新联系人的操作
-    public static void refreshContacts(final DataSource.Callback<List<UserCard>> callback){
+    // 刷新联系人的操作,不需要Callback，直接存储到数据库,并通过数据库观察者进行通知界面更新,界面更新的时候进行对比，然后差异更新
+    public static void refreshContacts(){
         RemoteService service = Network.remote();
         service.userContacts()
                 .enqueue(new Callback<RspModel<List<UserCard>>>() {
@@ -127,16 +134,23 @@ public class UserHelper {
             public void onResponse(Call<RspModel<List<UserCard>>> call, Response<RspModel<List<UserCard>>> response) {
                 RspModel<List<UserCard>> rspModel = response.body();
                 if(rspModel.success()){
+                    List<UserCard> cards = rspModel.getResult();
+                    if(cards == null || cards.size() == 0)
+                        return;
+
+                    UserCard[] cards1 = cards.toArray(new UserCard[0]);
+//                    CollectionUtil.toArray(cards,UserCard.class)
+                    Factory.getUserCenter().dispatch(cards1);
                     // 返回数据
-                    callback.onDataLoaded(rspModel.getResult());
+//                    callback.onDataLoaded(rspModel.getResult());
                 }else {
-                    Factory.decodeRspCode(rspModel, callback);
+                    Factory.decodeRspCode(rspModel, null);
                 }
             }
 
             @Override
             public void onFailure(Call<RspModel<List<UserCard>>> call, Throwable t) {
-                callback.onDataNotAvailable(R.string.data_network_error);
+                // nothing
             }
         });
     }
@@ -160,7 +174,8 @@ public class UserHelper {
                 // TODO 数据库的存储但是没有通知
                 User user = card.build();
                 // 数据库的存储并通知
-                DbHelper.save(User.class,user);
+                Factory.getUserCenter().dispatch(card);
+//                DbHelper.save(User.class,user);
 //                user.save();
                 return user;
             }

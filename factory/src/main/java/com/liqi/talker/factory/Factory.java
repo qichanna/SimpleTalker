@@ -6,7 +6,14 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.liqi.common.app.Application;
 import com.liqi.factory.data.DataSource;
+import com.liqi.talker.factory.data.group.GroupCenter;
+import com.liqi.talker.factory.data.group.GroupDispatcher;
+import com.liqi.talker.factory.data.message.MessageCenter;
+import com.liqi.talker.factory.data.message.MessageDispatcher;
+import com.liqi.talker.factory.data.user.UserCenter;
+import com.liqi.talker.factory.data.user.UserDispatcher;
 import com.liqi.talker.factory.model.api.RspModel;
+import com.liqi.talker.factory.model.db.Message;
 import com.liqi.talker.factory.persistence.Account;
 import com.liqi.talker.factory.utils.DBFlowExclusionStrategy;
 import com.raizlabs.android.dbflow.config.FlowConfig;
@@ -160,6 +167,30 @@ public class Factory {
      * @param message
      */
     public static void dispatchPush(String message){
+        // TODO
+    }
 
+    /**
+     *  获取一个用户中心的实现类
+     * @return 用户中心的规范接口
+     */
+    public static UserCenter getUserCenter(){
+        return UserDispatcher.instance();
+    }
+
+    /**
+     *  获取一个消息中心的实现类
+     * @return 消息中心的规范接口
+     */
+    public static MessageCenter getMessageCenter(){
+        return MessageDispatcher.instance();
+    }
+
+    /**
+     *  获取一个群处理中心的实现类
+     * @return 群中心的规范接口
+     */
+    public static GroupCenter getGroupCenter(){
+        return GroupDispatcher.instance();
     }
 }
