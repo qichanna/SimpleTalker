@@ -1,52 +1,33 @@
 package com.liqi.talker.factory.presenter.contact;
 
-import android.support.annotation.NonNull;
-import android.support.annotation.StringRes;
 import android.support.v7.util.DiffUtil;
 
 import com.liqi.common.widget.recycler.RecyclerAdapter;
 import com.liqi.factory.data.DataSource;
-import com.liqi.factory.presenter.BasePresenter;
-import com.liqi.factory.presenter.BaseRecyclerPresenter;
 import com.liqi.talker.factory.data.helper.UserHelper;
 import com.liqi.talker.factory.data.user.ContactDataSource;
 import com.liqi.talker.factory.data.user.ContactRepository;
-import com.liqi.talker.factory.model.card.UserCard;
-import com.liqi.talker.factory.model.db.AppDatabase;
 import com.liqi.talker.factory.model.db.User;
-import com.liqi.talker.factory.model.db.User_Table;
-import com.liqi.talker.factory.persistence.Account;
+import com.liqi.talker.factory.presenter.BaseSourcePresenter;
 import com.liqi.talker.factory.utils.DiffUiDataCallback;
-import com.raizlabs.android.dbflow.config.DatabaseDefinition;
-import com.raizlabs.android.dbflow.config.FlowManager;
-import com.raizlabs.android.dbflow.sql.language.SQLite;
-import com.raizlabs.android.dbflow.structure.database.DatabaseWrapper;
-import com.raizlabs.android.dbflow.structure.database.transaction.ITransaction;
-import com.raizlabs.android.dbflow.structure.database.transaction.QueryTransaction;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /** 联系人的Presenter实现
  * Created by liqi on 2017/9/20.
  */
 
-public class ContactPresenter extends BaseRecyclerPresenter<User,ContactContract.View>
+public class ContactPresenter extends BaseSourcePresenter<User,User, ContactDataSource,ContactContract.View>
         implements ContactContract.Presenter,DataSource.SucceedCallback<List<User>>{
 
-    private ContactDataSource mSource;
-
     public ContactPresenter(ContactContract.View view) {
-        super(view);
-        mSource = new ContactRepository();
+        // 初始化数据仓库
+        super(new ContactRepository(), view);
     }
 
     @Override
     public void start() {
         super.start();
-
-        // 进行本地的数据加载，并添加更新
-        mSource.load(this);
 
         // 加载网络数据
         UserHelper.refreshContacts();
@@ -76,13 +57,5 @@ public class ContactPresenter extends BaseRecyclerPresenter<User,ContactContract
 
         // 调用基类方法进行界面刷新
         refreshData(result,users);
-
-    }
-
-    @Override
-    public void destroy() {
-        super.destroy();
-        // 当界面销毁的时候,我们应该把数据监听进行销毁
-        mSource.dispose();
     }
 }

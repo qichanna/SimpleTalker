@@ -271,7 +271,7 @@ public class DbHelper {
      *  通知监听器
      * @param <Data>
      */
-    public interface ChangedListener<Data>{
+    public interface ChangedListener<Data extends BaseModel>{
         void onDateSave(Data... list);
 
         void onDateDelete(Data... list);

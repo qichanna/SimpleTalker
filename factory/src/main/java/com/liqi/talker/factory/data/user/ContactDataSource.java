@@ -1,6 +1,7 @@
 package com.liqi.talker.factory.data.user;
 
 import com.liqi.factory.data.DataSource;
+import com.liqi.factory.data.DbDataSource;
 import com.liqi.talker.factory.model.db.User;
 
 import java.util.List;
@@ -9,15 +10,6 @@ import java.util.List;
  * Created by liqi on 2017/10/8.
  */
 
-public interface ContactDataSource {
-    /**
-     *  对数据进行加载的一个职责
-     * @param callback
-     */
-    void load(DataSource.SucceedCallback<List<User>> callback);
+public interface ContactDataSource extends DbDataSource<User>{
 
-    /**
-     *  销毁操作
-     */
-    void dispose();
 }
