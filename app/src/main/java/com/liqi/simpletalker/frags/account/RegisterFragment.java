@@ -109,7 +109,7 @@ public class RegisterFragment extends PresenterFragment<RegisterContract.Present
     public void registerSuccess() {
         // 注册成功,这个时候账户已经登录
         // 我们需要进行跳转到mainActivity界面
-
+        MainActivity.show(getContext());
         //关闭当前界面
         getActivity().finish();
     }

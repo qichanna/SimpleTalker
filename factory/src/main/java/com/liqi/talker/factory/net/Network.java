@@ -1,6 +1,7 @@
 package com.liqi.talker.factory.net;
 
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.liqi.common.Common;
 import com.liqi.talker.factory.Factory;
@@ -12,6 +13,7 @@ import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -29,6 +31,20 @@ public class Network {
 
     private Network(){
 
+    }
+
+    private static Interceptor initLogInterceptor(){
+        //日志显示级别
+        HttpLoggingInterceptor.Level level = HttpLoggingInterceptor.Level.BODY;
+        //新建log拦截器
+        Interceptor interceptor = new HttpLoggingInterceptor(new HttpLoggingInterceptor.Logger() {
+            @Override
+            public void log(String message) {
+                Log.d("NetWorkUrl", "log: " + message);
+            }
+        });
+        ((HttpLoggingInterceptor) interceptor).setLevel(level);
+        return interceptor;
     }
 
     // 构建一个Retrofit
@@ -57,6 +73,8 @@ public class Network {
                         return chain.proceed(newRequest);
                     }
                 })
+                //添加日志拦截器
+                .addInterceptor(initLogInterceptor())
                 .build();
 
         Retrofit.Builder builder = new Retrofit.Builder();
