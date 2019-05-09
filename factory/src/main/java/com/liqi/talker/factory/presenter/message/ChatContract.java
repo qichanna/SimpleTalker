@@ -5,8 +5,6 @@ import com.liqi.talker.factory.model.db.Group;
 import com.liqi.talker.factory.model.db.Message;
 import com.liqi.talker.factory.model.db.User;
 
-import java.util.List;
-
 /**
  * 聊天契约
  *
@@ -19,7 +17,7 @@ public interface ChatContract {
         void pushText(String content);
 
         // 发送语音
-        void pushAudio(String path, long time);
+        void pushAudio(String path);
 
         // 发送图片
         void pushImages(String[] paths);
@@ -41,10 +39,6 @@ public interface ChatContract {
 
     // 群聊天的界面
     interface GroupView extends View<Group> {
-        // 显示管理员菜单
-//        void showAdminOption(boolean isAdmin);
 
-        // 初始化成员信息
-//        void onInitGroupMembers(List<MemberUserModel> members, long moreCount);
     }
 }

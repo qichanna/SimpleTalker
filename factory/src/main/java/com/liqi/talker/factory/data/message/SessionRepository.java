@@ -53,7 +53,7 @@ public class SessionRepository extends BaseDbRepository<Session>
     @Override
     protected void insert(Session session) {
         // 复写方法，让新的数据加到头部
-//        dataList.addFirst(session);
+        dataList.addFirst(session);
     }
 
     @Override
