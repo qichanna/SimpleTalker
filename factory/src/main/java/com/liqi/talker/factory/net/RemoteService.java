@@ -4,6 +4,8 @@ package com.liqi.talker.factory.net;
  * Created by liqi7 on 2017/8/22.
  */
 
+import com.liqi.talker.factory.model.api.message.MsgCreateModel;
+import com.liqi.talker.factory.model.card.MessageCard;
 import com.liqi.talker.factory.model.card.UserCard;
 import com.liqi.talker.factory.model.api.RspModel;
 import com.liqi.talker.factory.model.api.account.AccountRspModel;
@@ -66,6 +68,11 @@ public interface RemoteService {
     @GET("user/contact")
     Call<RspModel<List<UserCard>>> userContacts();
 
+    // 查询某人的信息
     @GET("user/{userId}")
     Call<RspModel<UserCard>> userFind(@Path("userId")String userId);
+
+    // 发送消息的接口
+    @POST("msg")
+    Call<RspModel<MessageCard>> msgPush(@Body MsgCreateModel model);
 }

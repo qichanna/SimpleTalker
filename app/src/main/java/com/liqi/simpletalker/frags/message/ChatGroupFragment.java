@@ -1,14 +1,14 @@
 package com.liqi.simpletalker.frags.message;
 
-
-import android.app.Fragment;
-
 import com.liqi.simpletalker.R;
+import com.liqi.talker.factory.model.db.Group;
+import com.liqi.talker.factory.presenter.message.ChatContract;
 
 /**
- * A simple {@link Fragment} subclass.
+ * 群聊天界面实现
  */
-public class ChatGroupFragment extends ChatFragment {
+public class ChatGroupFragment extends ChatFragment<Group>
+        implements ChatContract.GroupView {
 
 
     public ChatGroupFragment() {
@@ -21,4 +21,13 @@ public class ChatGroupFragment extends ChatFragment {
         return R.layout.fragment_chat_group;
     }
 
+    @Override
+    protected ChatContract.Presenter initPresenter() {
+        return null;
+    }
+
+    @Override
+    public void onInit(Group group) {
+
+    }
 }

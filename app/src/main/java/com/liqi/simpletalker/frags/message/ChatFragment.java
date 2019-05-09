@@ -8,16 +8,13 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
-import android.text.Spannable;
-import android.text.SpannableString;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.Adapter;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.liqi.common.app.Fragment;
+import com.liqi.common.app.PresenterFragment;
 import com.liqi.common.widget.PortraitView;
 import com.liqi.common.widget.adapter.TextWatcherAdapter;
 import com.liqi.common.widget.recycler.RecyclerAdapter;
@@ -26,6 +23,7 @@ import com.liqi.simpletalker.activities.MessageActivity;
 import com.liqi.talker.factory.model.db.Message;
 import com.liqi.talker.factory.model.db.User;
 import com.liqi.talker.factory.persistence.Account;
+import com.liqi.talker.factory.presenter.message.ChatContract;
 
 import net.qiujuer.genius.ui.compat.UiCompat;
 import net.qiujuer.genius.ui.widget.Loading;
@@ -35,8 +33,15 @@ import java.util.Objects;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public abstract class ChatFragment extends Fragment
-        implements AppBarLayout.OnOffsetChangedListener {
+/**
+ * @author qiujuer Email:qiujuer@live.cn
+ * @version 1.0.0
+ */
+public abstract class ChatFragment<InitModel>
+        extends PresenterFragment<ChatContract.Presenter>
+        implements AppBarLayout.OnOffsetChangedListener,
+        ChatContract.View<InitModel> {
+
     protected String mReceiverId;
     protected Adapter mAdapter;
 
@@ -58,6 +63,7 @@ public abstract class ChatFragment extends Fragment
     @BindView(R.id.btn_submit)
     View mSubmit;
 
+
     @Override
     protected void initArgs(Bundle bundle) {
         super.initArgs(bundle);
@@ -76,6 +82,13 @@ public abstract class ChatFragment extends Fragment
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mAdapter = new Adapter();
         mRecyclerView.setAdapter(mAdapter);
+    }
+
+    @Override
+    protected void initData() {
+        super.initData();
+        // 开始进行初始化操作
+        mPresenter.start();
     }
 
     // 初始化Toolbar
@@ -126,6 +139,9 @@ public abstract class ChatFragment extends Fragment
     void onSubmitClick() {
         if (mSubmit.isActivated()) {
             // 发送
+            String content = mContent.getText().toString();
+            mContent.setText("");
+            mPresenter.pushText(content);
         } else {
             onMoreClick();
         }
@@ -135,9 +151,18 @@ public abstract class ChatFragment extends Fragment
         // TODO
     }
 
+    @Override
+    public RecyclerAdapter<Message> getRecyclerAdapter() {
+        return mAdapter;
+    }
+
+    @Override
+    public void onAdapterDataChanged() {
+        // 界面没有占位布局，Recycler是一直显示的，所有不需要做任何事情
+    }
+
     // 内容的适配器
     private class Adapter extends RecyclerAdapter<Message> {
-
 
         @Override
         protected int getItemType(int position, Message message) {
@@ -186,6 +211,7 @@ public abstract class ChatFragment extends Fragment
             }
         }
     }
+
 
     // Holder的基类
     class BaseHolder extends RecyclerAdapter.ViewHolder<Message> {
@@ -240,11 +266,11 @@ public abstract class ChatFragment extends Fragment
         void onRePushClick() {
             // 重新发送
 
-            /*if (mLoading != null && mPresenter.rePush(mData)) {
+            if (mLoading != null && mPresenter.rePush(mData)) {
                 // 必须是右边的才有可能需要重新发送
                 // 状态改变需要重新刷新界面当前的信息
                 updateData(mData);
-            }*/
+            }
 
         }
     }
@@ -262,13 +288,9 @@ public abstract class ChatFragment extends Fragment
         protected void onBind(Message message) {
             super.onBind(message);
 
-            Spannable spannable = new SpannableString(message.getContent());
-
-            // 解析表情
-//                Face.decode(mContent, spannable, (int) Ui.dipToPx(getResources(), 20));
-
             // 把内容设置到布局上
-            mContent.setText(spannable);
+            mContent.setText(message.getContent());
+
         }
     }
 
@@ -289,7 +311,6 @@ public abstract class ChatFragment extends Fragment
     // 图片的Holder
     class PicHolder extends BaseHolder {
 
-
         public PicHolder(View itemView) {
             super(itemView);
         }
@@ -297,9 +318,9 @@ public abstract class ChatFragment extends Fragment
         @Override
         protected void onBind(Message message) {
             super.onBind(message);
-
             // TODO
-
         }
     }
+
+
 }
