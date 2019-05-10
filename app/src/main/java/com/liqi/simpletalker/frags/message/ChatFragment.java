@@ -165,7 +165,7 @@ public abstract class ChatFragment<InitModel>
     private class Adapter extends RecyclerAdapter<Message> {
 
         @Override
-        protected int getItemType(int position, Message message) {
+        protected int getItemViewType(int position, Message message) {
             // 我发送的在右边，收到的在左边
             boolean isRight = Objects.equals(message.getSender().getId(), Account.getUserId());
 

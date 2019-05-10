@@ -1,5 +1,6 @@
 package com.liqi.common.widget.recycler;
 
+import android.support.annotation.LayoutRes;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -50,10 +51,20 @@ public abstract class RecyclerAdapter<Data> extends RecyclerView.Adapter<Recycle
      */
     @Override
     public int getItemViewType(int position) {
-        return getItemType(position,mDataList.get(position));
+        return getItemViewType(position,mDataList.get(position));
     }
 
-    protected abstract int getItemType(int position, Data data);
+    /**
+     * 得到布局的类型
+     *
+     * @param position 坐标
+     * @param data     当前的数据
+     * @return XML文件的ID，用于创建ViewHolder
+     */
+    @LayoutRes
+    protected abstract int getItemViewType(int position, Data data);
+
+//    protected abstract int getItemType(int position, Data data);
 
 
     /**

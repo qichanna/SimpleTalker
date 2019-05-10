@@ -64,7 +64,7 @@ public class SearchUserFragment extends PresenterFragment<SearchContract.Present
         mRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecycler.setAdapter(mAdapter = new RecyclerAdapter<UserCard>() {
             @Override
-            protected int getItemType(int position, UserCard userCard) {
+            protected int getItemViewType(int position, UserCard userCard) {
                 // 返回cell的布局id
                 return R.layout.cell_search_list;
             }

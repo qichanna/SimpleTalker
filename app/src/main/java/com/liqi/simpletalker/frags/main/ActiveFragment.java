@@ -53,7 +53,7 @@ public class ActiveFragment extends PresenterFragment<SessionContract.Presenter>
         mRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecycler.setAdapter(mAdapter = new RecyclerAdapter<Session>() {
             @Override
-            protected int getItemType(int position, Session session) {
+            protected int getItemViewType(int position, Session session) {
                 // 返回cell的布局id
                 return R.layout.cell_chat_list;
             }
@@ -65,16 +65,12 @@ public class ActiveFragment extends PresenterFragment<SessionContract.Presenter>
         });
 
         // 点击事件监听
-        mAdapter.setListener(new RecyclerAdapter.AdapterListener<Session>() {
+        mAdapter.setListener(new RecyclerAdapter.AdapterListenerImpl<Session>() {
+
             @Override
             public void OnItemClick(RecyclerAdapter.ViewHolder holder, Session session) {
                 // 跳转到聊天界面
                 MessageActivity.show(getContext(), session);
-            }
-
-            @Override
-            public void onItemLongClick(RecyclerAdapter.ViewHolder holder, Session session) {
-
             }
         });
 

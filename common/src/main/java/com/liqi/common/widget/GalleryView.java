@@ -261,7 +261,7 @@ public class GalleryView extends RecyclerView {
     private class Adapter extends RecyclerAdapter<Image>{
 
         @Override
-        protected int getItemType(int position, Image image) {
+        protected int getItemViewType(int position, Image image) {
             return R.layout.cell_galley;
         }
 

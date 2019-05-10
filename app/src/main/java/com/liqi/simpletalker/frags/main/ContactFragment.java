@@ -51,7 +51,7 @@ public class ContactFragment extends PresenterFragment<ContactContract.Presenter
         mRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecycler.setAdapter(mAdapter = new RecyclerAdapter<User>() {
             @Override
-            protected int getItemType(int position, User userCard) {
+            protected int getItemViewType(int position, User userCard) {
                 // 返回cell的布局id
                 return R.layout.cell_contact_list;
             }
