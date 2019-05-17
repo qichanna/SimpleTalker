@@ -8,8 +8,10 @@ import com.liqi.talker.factory.model.api.user.UserUpdateModel;
 import com.liqi.talker.factory.model.card.UserCard;
 import com.liqi.talker.factory.model.db.User;
 import com.liqi.talker.factory.model.db.User_Table;
+import com.liqi.talker.factory.model.db.view.UserSampleModel;
 import com.liqi.talker.factory.net.Network;
 import com.liqi.talker.factory.net.RemoteService;
+import com.liqi.talker.factory.persistence.Account;
 import com.raizlabs.android.dbflow.sql.language.SQLite;
 
 import java.util.List;
@@ -130,29 +132,29 @@ public class UserHelper {
         RemoteService service = Network.remote();
         service.userContacts()
                 .enqueue(new Callback<RspModel<List<UserCard>>>() {
-            @Override
-            public void onResponse(Call<RspModel<List<UserCard>>> call, Response<RspModel<List<UserCard>>> response) {
-                RspModel<List<UserCard>> rspModel = response.body();
-                if(rspModel.success()){
-                    List<UserCard> cards = rspModel.getResult();
-                    if(cards == null || cards.size() == 0)
-                        return;
+                    @Override
+                    public void onResponse(Call<RspModel<List<UserCard>>> call, Response<RspModel<List<UserCard>>> response) {
+                        RspModel<List<UserCard>> rspModel = response.body();
+                        if(rspModel.success()){
+                            List<UserCard> cards = rspModel.getResult();
+                            if(cards == null || cards.size() == 0)
+                                return;
 
-                    UserCard[] cards1 = cards.toArray(new UserCard[0]);
+                            UserCard[] cards1 = cards.toArray(new UserCard[0]);
 //                    CollectionUtil.toArray(cards,UserCard.class)
-                    Factory.getUserCenter().dispatch(cards1);
-                    // 返回数据
+                            Factory.getUserCenter().dispatch(cards1);
+                            // 返回数据
 //                    callback.onDataLoaded(rspModel.getResult());
-                }else {
-                    Factory.decodeRspCode(rspModel, null);
-                }
-            }
+                        }else {
+                            Factory.decodeRspCode(rspModel, null);
+                        }
+                    }
 
-            @Override
-            public void onFailure(Call<RspModel<List<UserCard>>> call, Throwable t) {
-                // nothing
-            }
-        });
+                    @Override
+                    public void onFailure(Call<RspModel<List<UserCard>>> call, Throwable t) {
+                        // nothing
+                    }
+                });
     }
 
     // 从本地查询一个用户的信息
@@ -212,5 +214,34 @@ public class UserHelper {
             return findFromLocal(id);
         }
         return user;
+    }
+
+    /**
+     * 获取联系人
+     */
+    public static List<User> getContact() {
+        return SQLite.select()
+                .from(User.class)
+                .where(User_Table.isFollow.eq(true))
+                .and(User_Table.id.notEq(Account.getUserId()))
+                .orderBy(User_Table.name, true)
+                .limit(100)
+                .queryList();
+    }
+
+
+    // 获取一个联系人列表，
+    // 但是是一个简单的数据的
+    public static List<UserSampleModel> getSampleContact() {
+        //"select id = ??";
+        //"select User_id = ??";
+        return SQLite.select(User_Table.id.withTable().as("id"),
+                User_Table.name.withTable().as("name"),
+                User_Table.portrait.withTable().as("portrait"))
+                .from(User.class)
+                .where(User_Table.isFollow.eq(true))
+                .and(User_Table.id.notEq(Account.getUserId()))
+                .orderBy(User_Table.name, true)
+                .queryCustomList(UserSampleModel.class);
     }
 }

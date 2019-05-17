@@ -1,5 +1,6 @@
 package com.liqi.talker.factory.model.card;
 
+import com.google.gson.annotations.Expose;
 import com.liqi.talker.factory.model.db.Group;
 import com.liqi.talker.factory.model.db.User;
 
